@@ -3,9 +3,6 @@ var walk = require("walk");
 
 var commands = {
 
-  //TODO: loadModule command to load commands in from external modules.
-
-  // Utilities
   scanModules: function(callback) {
     var files   = [];
     var walker  = walk.walk('./modules', { followLinks: false });
@@ -19,6 +16,7 @@ var commands = {
       callback(files);
     });
   },
+
   loadModules: function () {
     var self = this;
     this.scanModules(function (files) {
@@ -29,6 +27,7 @@ var commands = {
         }
     });
   },
+
   resolve: function (bot, msg, callback) {
     var args = msg.text.split(' ');
     if(typeof this.commands[args[0]] == 'function') {
@@ -39,27 +38,10 @@ var commands = {
     }
   },
 
-
-  /*
- *  Command format:
- *
- *    '/command': function(msg, args, callback) {
- *      // Do something
- *      callback( // Error message, // Outbound message, // Object of message options );
- *    }
- */
-
   commands: {
-
-    // 	Misc.
-
-    '/wot': function(bot, msg, args, callback) {
-      bot.sendMessage(msg.chat.id, 'wut');
-    }
 
   }
 
 };
-
 
 module.exports = commands;
