@@ -19,6 +19,10 @@ var commands = {
   '/hi': function(msg, args, callback) {
     var from = msg.from.username ? '@' + msg.from.username : msg.from.first_name;
     callback(null, 'Hello, ' + from + '!');
+  },
+  '/me': function (msg, args, callback) {
+    var from = msg.from.username ? '@' + msg.from.username : msg.from.first_name;
+    callback(null, '_' + from + ' ' + args.join(' ') + '_', { parse_mode: 'Markdown' });
   }
 
 
