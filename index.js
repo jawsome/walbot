@@ -15,7 +15,9 @@ var logger = function (message, msg) {
   }
 }
 
-commands.loadModules();
+commands.loadModules(function () {
+  console.log(commands.commands)
+});
 
 var bot = new TelegramBot(config.key, options);
 

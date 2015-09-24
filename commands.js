@@ -17,7 +17,7 @@ var commands = {
     });
   },
 
-  loadModules: function () {
+  loadModules: function (callback) {
     var self = this;
     this.scanModules(function (files) {
       for(var i=0;i<files.length;i++) {
@@ -25,6 +25,7 @@ var commands = {
         var commands = require('./modules/'+ name).commands;
         self.commands = extend(self.commands, commands);
         }
+      callback();
     });
   },
 
