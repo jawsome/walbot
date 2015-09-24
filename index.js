@@ -9,13 +9,13 @@ var bot = new TelegramBot(config.key, options);
 bot.setWebHook('');
 
 bot.on('text', function (msg) {
-  commands.resolve(msg, function (err, message) {
+  commands.resolve(msg, function (err, message, opts) {
     if(err) {
       console.log(err);
       return;
     }
     else {
-      bot.sendMessage(msg.chat.id, message);
+      bot.sendMessage(msg.chat.id, message, opts);
     }
   });
 });
