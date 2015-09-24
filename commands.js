@@ -1,13 +1,38 @@
+var extend = require("xtend");
+var walk = require("walk");
+
 var commands = {
 
   //TODO: loadModule command to load commands in from external modules.
 
   // Utilities
-
-  resolve: function (msg, callback) {
+  scanModules: function(callback) {
+    var files   = [];
+    var walker  = walk.walk('./modules', { followLinks: false });
+    walker.on('file', function(root, stat, next) {
+      if(/^([a-z0-9]+)\.js$/.test(stat.name)) {
+        files.push( stat.name);
+      }
+      next();
+    });
+    walker.on('end', function() {
+      callback(files);
+    });
+  },
+  loadModules: function () {
+    var self = this;
+    this.scanModules(function (files) {
+      for(var i=0;i<files.length;i++) {
+        var name = files[i].split('.js')[0];
+        var commands = require('./modules/'+ name).commands;
+        self.commands = extend(self.commands, commands);
+        }
+    });
+  },
+  resolve: function (bot, msg, callback) {
     var args = msg.text.split(' ');
     if(typeof this.commands[args[0]] == 'function') {
-      this.commands[args[0]](msg, args.slice(1), callback);
+      this.commands[args[0]](bot, msg, args.slice(1), callback);
     }
     else {
       callback('Command [' + msg.text + '] not found.');
@@ -28,20 +53,8 @@ var commands = {
 
     // 	Misc.
 
-    '/wot': function(msg, args, callback) {
-      callback(null, 'wut');
-    },
-
-    // Greetings
-    '/hi': function(msg, args, callback) {
-      var from = msg.from.username ? '@' + msg.from.username : msg.from.first_name;
-      callback(null, 'Hello, ' + from + '!');
-    },
-
-    // Actions
-    '/me': function (msg, args, callback) {
-      var from = msg.from.username ? '@' + msg.from.username : msg.from.first_name;
-      callback(null, '_' + from + ' ' + args.join(' ') + '_', { parse_mode: 'Markdown' });
+    '/wot': function(bot, msg, args, callback) {
+      bot.sendMessage(msg.chat.id, 'wut');
     }
 
   }
