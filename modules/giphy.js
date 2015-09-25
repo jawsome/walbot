@@ -16,7 +16,13 @@ var giphy = {
             bot.sendMessage(msg.chat.id, 'aww.. fuckin damint\nshit broke', { reply_to_message_id: msg.message_id });
           }
           else {
-            giphy.sendGif(res.data[Math.floor(Math.random() * (res.data.length - 0 + 1))].images.original.url, bot, msg, callback);
+            if(res.data.length > 0) {
+              giphy.sendGif(res.data[Math.floor(Math.random() * (res.data.length - 1 + 1))]['images']['original']['url'], bot, msg, callback);
+            }
+            else {
+              callback("No response data", null);
+              bot.sendMessage(msg.chat.id, 'aww.. damint\nthey aint find shit', { reply_to_message_id: msg.message_id });
+            }
           }
         });
       }
