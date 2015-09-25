@@ -37,5 +37,11 @@ bot.on('text', function (msg) {
 });
 
 bot.on('left_chat_participant', function (msg) {
-  bot.sendMessage(msg.chat.id, 'rip ' + msg.from.first_name);
+  var joiner = msg.left_chat_participant.username ? msg.left_chat_participant.username : msg.left_chat_participant.first_name + " " +msg.left_chat_participant.last_name;
+  bot.sendMessage(msg.chat.id, 'rip ' + joiner);
+});
+
+bot.on('new_chat_participant', function (msg) {
+  var joiner = msg.new_chat_participant.username ? msg.new_chat_participant.username : msg.new_chat_participant.first_name + " " +msg.new_chat_participant.last_name;
+  bot.sendMessage(msg.chat.id, 'ayyyyyyyyyyy grl ' + joiner);
 });
