@@ -4,6 +4,7 @@
   "description": "A bot that's amazing. Also, telegram.",
   "main": "index.js",
   "dependencies": {
+    "genius-api": "^0.3.0",
     "moment": "^2.10.6",
     "node-bing-api": "^2.0.0",
     "node-telegram-bot-api": "^0.12.1",
