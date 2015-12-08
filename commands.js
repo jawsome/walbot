@@ -1,5 +1,6 @@
 var extend = require("xtend");
 var walk = require("walk");
+var config = require("./config.json");
 
 var commands = {
 
@@ -30,6 +31,7 @@ var commands = {
   },
 
   resolve: function (bot, msg, callback) {
+    msg.text = msg.text.replace("@" + config.botname, "");
     var args = msg.text.split(' ');
     if(typeof this.commands[args[0]] == 'function') {
       this.commands[args[0]](bot, msg, args.slice(1), callback);
