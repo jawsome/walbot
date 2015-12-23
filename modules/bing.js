@@ -10,7 +10,8 @@ var bing = {
          console.log(err);
         }
         else if(body.d.results[0]) {
-          var image = body.d.results[0];
+          var len = body.d.results.length;
+          var image = body.d.results[Math.floor(Math.random() * (len - 1 + 1))];
           if(image.FileSize < 5000000) {
             var data = request({ headers: { "User-agent": "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36" }, url: image.MediaUrl });
             bot.sendPhoto(msg.chat.id, data, { reply_to_message_id: msg.message_id });
