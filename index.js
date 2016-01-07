@@ -3,7 +3,11 @@ var moment = require('moment');
 var config = require('./config.json');
 var commands = require('./commands');
 var options = {
-  polling: true
+  webHook: {
+    port: 3000,
+    key: __dirname+'/../key.pem',
+    cert: __dirname+'/../crt.pem'
+  } 
 };
 
 var logger = function (message, msg) {
@@ -20,7 +24,7 @@ commands.loadModules(function () {
 });
 
 var bot = new TelegramBot(config.key, options);
-
+bot.setWebHook(config.webHookURL,__dirname+'/../crt.pem');
 bot.getMe().then(function (me) {
   logger(me.username + ' has been initialized.', null);
 });
